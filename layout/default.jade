@@ -44,7 +44,7 @@ html(lang='en')
       block body
 
       footer.site-footer
-        .subscribe: a(title='Subscribe', href='/rss')
+        .subscribe: a(title='Subscribe', href=config.root + config.feed.path)
           span.fa.fa-rss
         section.copyright &copy; #{ date(Date.now(), 'YYYY') } 
           a(href='mailto:' + config.email)= config.author
