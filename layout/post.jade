@@ -11,7 +11,18 @@ html(lang='en')
         time(datetime=page.date.format('YYYY-MM-DDTHH:mm:ss')) Published #{ page.date.format("dddd, MMMM DD, YYYY") }
       .content
         if page.comic
-          div.comic: img(alt=page.title, src=page.comic)
+          .comic: img(alt=page.title, src=page.comic)
+        if page.video
+          .comic: .video-wrapper
+            - var classes = ['js-video', page.video.type];
+            - var vidw = page.video.widescreen ? 560 : 420;
+            - var vidh = 315;
+            - if(page.video.type == 'vimeo') { vidw = page.video.widescreen ? 500 : 375; vidh = 281; }
+            - if(page.video.widescreen) { classes.push('widescreen'); }
+            - var vidurl = page.video.type == 'youtube' ? 'http://www.youtube.com/embed/' + page.video.id : 'http://player.vimeo.com/video/' + page.video.id;
+            div(class=classes.join(' '))
+              iframe(src=vidurl, width=vidw, height=vidh, frameborder=0, webkitallowfullscreen, mozallowfullscreen, allowfullscreen)
+
         != page.content
 
     if theme.piwikhost
