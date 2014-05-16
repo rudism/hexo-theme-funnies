@@ -1,5 +1,6 @@
 var history = window.History;
 var curState = -1;
+var skipInitialLoad = false;
 history.Adapter.bind(window, 'statechange', function(){
     var state = history.getState();
     if(typeof state.data.state === 'undefined' || curState != state.data.state){
@@ -10,7 +11,11 @@ history.Adapter.bind(window, 'statechange', function(){
             }
         }
     }
-    loadState(state.url);
+    if(skipInitialLoad){
+        skipInitialLoad = false;
+    } else {
+        loadState(state.url);
+    }
 });
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
@@ -18,6 +23,7 @@ String.prototype.endsWith = function(suffix) {
 $(document).ready(function(){
     if(curState < 0 && (window.location.pathname == "/" || window.location.pathname == "")){
         curState = 0;
+        skipInitialLoad = true;
         history.replaceState({state: 0}, postIndex[curState].title, postIndex[curState].url);
         loadState(postIndex[curState].url);
     }
@@ -29,6 +35,12 @@ function loadState(url){
         $('.comic').html($html.find('.content .comic').remove().html());
         $('.post-header').html($html.find('header').html());
         $('.post-content').html($html.find('.content').html());
+        var $comments = $html.find('.comments');
+        if($comments.length == 1){
+            $('#isso-script').remove();
+            $('#isso-thread').empty().attr('data-isso-id', url);
+            $('body').append($('<script id="isso-script" data-isso-reply-to-self="false" src="' + $comments.html() + '"></script>'));
+        }
         switch(curState){
             case 0:
                 $('.comic-nav').addClass('last-page').removeClass('first-page');

@@ -25,6 +25,9 @@ html(lang='en')
 
         != page.content
 
+      if page.comments
+        .comments http://#{ theme.issohost }/#{ theme.issoname }js/embed.min.js
+
     if theme.piwikhost
       script.
         var _paq = _paq || [];
