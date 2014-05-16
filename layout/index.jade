@@ -1,0 +1,19 @@
+extend default
+
+block body
+
+  include _partial/navigation
+  div#comic-wrapper
+    div.comic
+  include _partial/navigation
+
+  div.post-wrapper
+    header.post-header
+    div.post-content
+
+  script
+    != 'var postIndex = ['
+    - site.posts.sort('date', 'desc').each(function(post){
+      != '{"title":"' + post.title.replace(/"/g, "\\\"") + '","url":"' + config.root + post.path + '"},'
+    - })
+    != '];'

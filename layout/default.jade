@@ -1,0 +1,76 @@
+doctype html
+html(lang='en')
+  head
+    meta(http-equiv='Content-Type', content='text/html', charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title
+      block window_title
+        = page.tag ? config.title + ' - ' + page.tag.replace(/-/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : config.title
+
+    meta(name='description', content=config.description)
+
+    meta(name='HandheldFriendly', content='True')
+    meta(name='MobileOptimized', content='320')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
+
+    link(rel='shortcut icon', href=config.root + 'assets/favicon.png')
+    link(rel='alternate', type='application/rss+xml', title=config.title href=config.root + config.feed.path)
+    != css(config.root + 'assets/css/normalize.css')
+    != css(config.root + 'assets/css/nprogress.css')
+    != css(config.root + 'assets/css/screen.css')
+    != css(config.root + 'assets/css/embeds.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,700,400italic,700italic|Titan+One')
+    != css('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+  body
+    div#wrapper
+      header.site-header
+        .brand
+          a(href=config.root)
+            img.logo(src=config.root + 'assets/images/logo.png')
+          h1: a(href=config.root)= config.title
+          h2= config.subtitle
+        nav
+          ul
+            li: a(href=config.root)
+              span.fa.fa-home
+              = ' Home '
+            li: a(href=config.root + 'about')
+              span.fa.fa-question-circle
+              = ' About '
+            li: a(href=config.root + 'support')
+              span.fa.fa-heart
+              = ' Support '
+
+      block body
+
+      footer.site-footer
+        .subscribe: a(title='Subscribe', href='/rss')
+          span.fa.fa-rss
+        section.copyright &copy; #{ date(Date.now(), 'YYYY') } 
+          a(href='mailto:' + config.email)= config.author
+          = '. '
+          a(href='http://creativecommons.org/licenses/by/4.0/deed.en_US') Some rights reserved
+          = '. '
+          br
+          a(rel='license', href='http://creativecommons.org/licenses/by/4.0/deed.en_US'): img(alt='Creative Commons License', src='http://i.creativecommons.org/l/by/4.0/80x15.png')
+        section.poweredby Powered by 
+          a(href='http://hexio.io/') Hexio
+          = '.'
+
+    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
+    script(src=config.root + 'assets/js/jquery.history.js')
+    script(src=config.root + 'assets/js/nprogress.js')
+    script(src=config.root + 'assets/js/app.js')
+    if theme.piwikhost
+      script.
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+
+        (function() {
+          var u=(("https:" == document.location.protocol) ? "https" : "http") + "://#{ theme.piwikhost }/";
+          _paq.push(["setTrackerUrl", u+"piwik.php"]);
+          _paq.push(["setSiteId", "#{ theme.piwikid }"]);
+          var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+          g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+        })();

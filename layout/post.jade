@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    meta(http-equiv='Content-Type', content='text/html', charset='UTF-8')
+    meta(http-equiv='refresh', content="0;URL='#{ config.url + config.root + '#' + page.path }'")
+    title= page.title
+  body
+    div(style='display: none')
+      header
+        h3= page.title
+        time(datetime=page.date.format('YYYY-MM-DDTHH:mm:ss')) Published #{ page.date.format("dddd, MMMM DD, YYYY") }
+      .content
+        if page.comic
+          div.comic: img(alt=page.title, src=page.comic)
+        != page.content
+
+    if theme.piwikhost
+      script.
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+
+        (function() {
+          var u=(("https:" == document.location.protocol) ? "https" : "http") + "://#{ theme.piwikhost }/";
+          _paq.push(["setTrackerUrl", u+"piwik.php"]);
+          _paq.push(["setSiteId", "#{ theme.piwikid }"]);
+          var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+          g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+        })();
