@@ -14,7 +14,7 @@ history.Adapter.bind(window, 'statechange', function(){
     if(skipInitialLoad){
         skipInitialLoad = false;
     } else {
-        loadState(state.url);
+        loadState(postIndex[curState].url);
     }
 });
 String.prototype.endsWith = function(suffix) {
@@ -38,8 +38,10 @@ function loadState(url){
         var $comments = $html.find('.comments');
         if($comments.length == 1){
             $('#isso-script').remove();
-            $('#isso-thread').empty().attr('data-isso-id', url);
+            $('#isso-thread').empty().attr('data-isso-id', url).show();
             $('body').append($('<script id="isso-script" data-isso-reply-to-self="false" src="' + $comments.html() + '"></script>'));
+        } else {
+            $('#isso-thread').hide();
         }
         switch(curState){
             case 0:

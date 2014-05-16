@@ -43,7 +43,7 @@ html(lang='en')
 
       block body
 
-      section#isso-thread
+      section#isso-thread(style='display: none')
 
       footer.site-footer
         .subscribe: a(title='Subscribe', href=config.root + config.feed.path)
@@ -56,7 +56,7 @@ html(lang='en')
           br
           a(rel='license', href='http://creativecommons.org/licenses/by/4.0/deed.en_US'): img(alt='Creative Commons License', src='http://i.creativecommons.org/l/by/4.0/80x15.png')
         section.poweredby Powered by 
-          a(href='http://hexio.io/') Hexio
+          a(href='http://hexo.io/') Hexo
           = '.'
 
     script(src='http://code.jquery.com/jquery-2.1.1.min.js')
