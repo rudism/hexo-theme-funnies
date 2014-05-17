@@ -14,7 +14,7 @@ history.Adapter.bind(window, 'statechange', function(){
     if(skipInitialLoad){
         skipInitialLoad = false;
     } else {
-        loadState(postIndex[curState].url);
+        loadState(curState);
     }
 });
 String.prototype.endsWith = function(suffix) {
@@ -25,10 +25,16 @@ $(document).ready(function(){
         curState = 0;
         skipInitialLoad = true;
         history.replaceState({state: 0}, postIndex[curState].title, postIndex[curState].url);
-        loadState(postIndex[curState].url);
+        loadState(curState, true);
     }
 });
-function loadState(url){
+function loadState(idx, notrack){
+    if(!notrack){
+        _paq.push(['trackPageView', url]);
+    }
+
+    var url = postIndex[curState].url;
+    window.document.title = postIndex[curState].title;
     NProgress.start();
     $.get(url, function(result){
         var $html = $(result);
