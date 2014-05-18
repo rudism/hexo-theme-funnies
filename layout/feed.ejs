@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title><%-: config.title | cdata %></title>
+    <link><%- encodeURI(config.url) %>/</link>
+    <atom:link href="<%- encodeURI(feed_url) %>" rel="self" type="application/rss+xml"/>
+    <description><%-: config.description | cdata %></description>
+    <pubDate><%= new Date().toUTCString() %></pubDate>
+    <generator>http://zespia.tw/hexo/</generator>
+    <% posts.each(function(post){ %>
+    <item>
+      <title><%-: post.title | cdata %></title>
+      <link><%- encodeURI(post.permalink) %></link>
+      <guid><%- encodeURI(post.permalink) %></guid>
+      <pubDate><%= post.date.toDate().toUTCString() %></pubDate>
+      <% if (post.comic){ %>
+      <content:encoded><%-: '<img src="' + post.comic + '"/>' + post.content | cdata %></content:encoded>
+      <% } else if(post.video && post.video.type == 'youtube') { %>
+      <content:encoded><%-: '<iframe src="http://www.youtube.com/embed/' + post.video.id + '" width="' + (post.video.widescreen ? '560' : '420') + '" height="315"></iframe>' + post.content | cdata %></content:encoded>
+      <% } else if(post.video && post.video.type == 'vimeo') { %>
+      <content:encoded><%-: '<iframe src="http://player.vimeo.com/video/' + post.video.id + '" width="' + (post.video.widescreen ? '500' : '375') + '" height="281"></iframe>' + post.content | cdata %></content:encoded>
+      <% } else { %>
+      <content:encoded><%-: post.content | cdata %></content:encoded>
+      <% } %>
+    </item>
+    <% }) %>
+  </channel>
+</rss>
