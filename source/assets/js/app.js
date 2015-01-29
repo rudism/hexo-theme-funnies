@@ -1,8 +1,8 @@
 var history = window.History;
 var curState = -1;
 var skipInitialLoad = false;
-history.Adapter.bind(window, 'statechange', function(){
-    var state = history.getState();
+History.Adapter.bind(window, 'statechange', function(){
+    var state = History.getState();
     if(typeof state.data.state === 'undefined' || curState != state.data.state){
         for(var i = 0; i < postIndex.length; i++){
             if(state.url.endsWith(postIndex[i].url)){
@@ -24,7 +24,7 @@ $(document).ready(function(){
     if(curState < 0 && (window.location.pathname == "/" || window.location.pathname == "")){
         curState = 0;
         skipInitialLoad = true;
-        history.replaceState({state: 0}, postIndex[curState].title, postIndex[curState].url);
+        History.replaceState({state: 0}, postIndex[curState].title, postIndex[curState].url);
         loadState(curState, true);
     }
 });
@@ -100,7 +100,7 @@ $('.comic-nav a').click(function(e){
             break;
     }
     if(curState != oldState){
-        history.pushState(
+        History.pushState(
             {state: curState},
             postIndex[curState].title,
             postIndex[curState].url
